@@ -48,18 +48,18 @@ export default function AuthPage() {
           {mode === 'register' && (
             <div className="form-group">
               <label className="form-label">Full name</label>
-              <input className="form-input" name="name" placeholder="Skanda Kumar" value={form.name} onChange={handleChange} required />
+              <input className="form-input" name="name" placeholder="Enter your full name" value={form.name} onChange={handleChange} required />
             </div>
           )}
 
           <div className="form-group">
             <label className="form-label">Email</label>
-            <input className="form-input" name="email" type="email" placeholder="you@example.com" value={form.email} onChange={handleChange} required />
+            <input className="form-input" name="email" type="email" placeholder="Enter your email" value={form.email} onChange={handleChange} required />
           </div>
 
           <div className="form-group">
             <label className="form-label">Password</label>
-            <input className="form-input" name="password" type="password" placeholder="••••••••" value={form.password} onChange={handleChange} required />
+            <input className="form-input" name="password" type="password" placeholder="Enter your password" value={form.password} onChange={handleChange} required />
           </div>
 
           {mode === 'register' && (
