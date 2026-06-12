@@ -84,7 +84,7 @@ The project demonstrates full-stack software engineering concepts including auth
 | Cloud Database   | Neon                 |
 | Authentication   | JWT + bcrypt         |
 | File Uploads     | Multer               |
-| AI Integration   | Anthropic Claude API |
+| AI Integration   | grok API |
 | Backend Hosting  | Railway              |
 | Frontend Hosting | Vercel               |
 | Version Control  | Git & GitHub         |
