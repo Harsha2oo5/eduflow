@@ -1,161 +1,274 @@
-# EduFlow — Smart School Platform
+# EduFlow — AI-Powered Learning Management System
 
-> AI-powered platform for teachers to manage classrooms and students to learn smarter.
+> A full-stack AI-powered Learning Management System that enables teachers to manage classrooms, attendance, study materials, quizzes, and student performance while helping students learn more effectively through AI-generated assessments.
+
+---
+
+## Live Demo
+
+**Frontend:** https://eduflow-nu-ashen.vercel.app
+
+**GitHub Repository:** https://github.com/Harsha2oo5/eduflow
+
+---
+
+## Overview
+
+EduFlow is a modern Learning Management System (LMS) built for educational institutions. The platform allows teachers to create and manage classrooms, distribute study materials, track attendance, evaluate student performance, and generate AI-powered quizzes from uploaded content.
+
+The project demonstrates full-stack software engineering concepts including authentication, role-based access control, file uploads, REST APIs, database design, deployment, cloud infrastructure, and AI integration.
+
+---
+
+## Features
+
+### Authentication & Authorization
+
+* JWT-based authentication
+* Secure password hashing using bcrypt
+* Role-based access control (Teacher / Student)
+* Protected routes and middleware authorization
+
+### Classroom Management
+
+* Create and manage classes
+* Join classes using unique class codes
+* Teacher and student dashboards
+* Class-specific data isolation
+
+### Attendance Management
+
+* Mark student attendance
+* View attendance records
+* Attendance analytics and insights
+* Historical attendance tracking
+
+### Marks & Performance Tracking
+
+* Record student marks
+* View class-wise performance
+* Student-specific score tracking
+* Academic progress monitoring
+
+### Study Materials
+
+* Upload PDF learning resources
+* Organize materials by classroom
+* Centralized content management
+
+### AI-Powered Quiz Generation
+
+* Generate quizzes automatically from uploaded materials
+* AI-assisted assessment creation
+* Interactive quiz interface
+* Faster content preparation for teachers
+
+### Modern Dashboard
+
+* Responsive user interface
+* Clean teacher and student workflows
+* Performance-focused design
+* Mobile-friendly experience
 
 ---
 
 ## Tech Stack
 
-| Layer | Tech | Why |
-|---|---|---|
-| Frontend | React + Tailwind | Component-based UI |
-| Backend | Node.js + Express | Fast, JS everywhere |
-| Database | PostgreSQL | Relational data, strong joins |
-| AI | Claude API (Anthropic) | Summaries + quiz generation |
-| Auth | JWT + bcrypt | Stateless auth, role-based |
-| File Upload | Multer | PDF handling |
+| Layer            | Technology           |
+| ---------------- | -------------------- |
+| Frontend         | React.js             |
+| Styling          | Tailwind CSS         |
+| Backend          | Node.js              |
+| API Framework    | Express.js           |
+| Database         | PostgreSQL           |
+| Cloud Database   | Neon                 |
+| Authentication   | JWT + bcrypt         |
+| File Uploads     | Multer               |
+| AI Integration   | Anthropic Claude API |
+| Backend Hosting  | Railway              |
+| Frontend Hosting | Vercel               |
+| Version Control  | Git & GitHub         |
+
+---
+
+## System Architecture
+
+```text
+React Frontend (Vercel)
+          │
+          ▼
+Express REST API (Railway)
+          │
+          ▼
+PostgreSQL Database (Neon)
+          │
+          ▼
+Claude API Integration
+```
 
 ---
 
 ## Project Structure
 
-```
-eduflow/
-├── backend/
-│   ├── src/
-│   │   ├── index.js              ← Express app entry point
-│   │   ├── config/
-│   │   │   ├── db.js             ← PostgreSQL connection pool
-│   │   │   └── schema.sql        ← All database tables
-│   │   ├── middleware/
-│   │   │   └── auth.js           ← JWT verify + role-based access
-│   │   ├── controllers/          ← Business logic lives here
-│   │   │   ├── authController.js
-│   │   │   ├── classController.js
-│   │   │   ├── attendanceController.js
-│   │   │   ├── marksController.js
-│   │   │   └── materialsController.js
-│   │   └── routes/               ← URL definitions
-│   │       ├── auth.js
-│   │       ├── classes.js
-│   │       ├── attendance.js
-│   │       ├── marks.js
-│   │       └── materials.js
-│   ├── uploads/                  ← PDF files stored here (gitignored)
-│   ├── .env.example
+```text
+eduflow
+├── eduflow-frontend
+│   ├── src
+│   │   ├── components
+│   │   ├── context
+│   │   ├── pages
+│   │   ├── utils
+│   │   └── App.jsx
 │   └── package.json
-└── frontend/                     ← React app (Module 2)
+│
+├── eduflowbackend
+│   ├── src
+│   │   ├── config
+│   │   ├── controllers
+│   │   ├── middleware
+│   │   ├── routes
+│   │   └── index.js
+│   ├── uploads
+│   └── package.json
+│
+└── README.md
 ```
 
 ---
 
-## Setup — Backend
+## API Endpoints
 
-### 1. Install dependencies
-```bash
-cd backend
-npm install
-```
+### Authentication
 
-### 2. Set up PostgreSQL
-```bash
-# Create the database
-createdb eduflow
-
-# Run the schema (creates all tables)
-psql -U postgres -d eduflow -f src/config/schema.sql
-```
-
-### 3. Configure environment
-```bash
-cp .env.example .env
-# Edit .env with your DB credentials and API keys
-```
-
-### 4. Start the server
-```bash
-npm run dev   # development (auto-restarts on file changes)
-npm start     # production
-```
-
----
-
-## API Reference
-
-### Auth
-| Method | Route | Auth | Description |
-|---|---|---|---|
-| POST | /api/auth/register | ❌ | Register new user |
-| POST | /api/auth/login | ❌ | Login |
-| GET | /api/auth/me | ✅ | Get current user |
+| Method | Endpoint           |
+| ------ | ------------------ |
+| POST   | /api/auth/register |
+| POST   | /api/auth/login    |
+| GET    | /api/auth/me       |
 
 ### Classes
-| Method | Route | Role | Description |
-|---|---|---|---|
-| GET | /api/classes | Any | Get my classes |
-| POST | /api/classes | Teacher | Create a class |
-| POST | /api/classes/join | Student | Join with code |
-| GET | /api/classes/:id | Any | Class details + students |
+
+| Method | Endpoint          |
+| ------ | ----------------- |
+| GET    | /api/classes      |
+| POST   | /api/classes      |
+| POST   | /api/classes/join |
+| GET    | /api/classes/:id  |
 
 ### Materials
-| Method | Route | Role | Description |
-|---|---|---|---|
-| POST | /api/materials/upload | Teacher | Upload PDF |
-| GET | /api/materials/class/:classId | Any | Class materials |
-| GET | /api/materials/:id | Any | Single material |
-| POST | /api/materials/:id/generate-quiz | Any | Generate quiz |
+
+| Method | Endpoint                         |
+| ------ | -------------------------------- |
+| POST   | /api/materials/upload            |
+| GET    | /api/materials/class/:classId    |
+| GET    | /api/materials/:id               |
+| POST   | /api/materials/:id/generate-quiz |
 
 ### Attendance
-| Method | Route | Role | Description |
-|---|---|---|---|
-| POST | /api/attendance | Teacher | Mark attendance |
-| GET | /api/attendance/:classId | Teacher | Get by date |
+
+| Method | Endpoint                 |
+| ------ | ------------------------ |
+| POST   | /api/attendance          |
+| GET    | /api/attendance/:classId |
 
 ### Marks
-| Method | Route | Role | Description |
-|---|---|---|---|
-| POST | /api/marks | Teacher | Add marks |
-| GET | /api/marks/class/:classId | Teacher | Class marks |
-| GET | /api/marks/student/me | Student | My marks |
+
+| Method | Endpoint                  |
+| ------ | ------------------------- |
+| POST   | /api/marks                |
+| GET    | /api/marks/class/:classId |
+| GET    | /api/marks/student/me     |
 
 ---
 
-## Key Concepts You Learn Building This
+## Deployment
 
-### 1. Connection Pooling (`config/db.js`)
-Opening a new DB connection per request costs ~50ms. Pool keeps N connections alive and reuses them.
+### Frontend
 
-### 2. JWT Flow (`middleware/auth.js`)
-```
-Login → server signs token → client stores token
-Next request → client sends token in header → server verifies → allows/denies
-```
+* Hosted on Vercel
+* Automatic CI/CD deployment from GitHub
 
-### 3. Middleware Chain (`index.js`)
-```
-Request → cors() → json() → authenticate() → authorize() → controller → response
-```
+### Backend
 
-### 4. Transactions (`attendanceController.js`)
-When saving 30 attendance records, either ALL succeed or NONE do. `BEGIN → queries → COMMIT` or `ROLLBACK` on error.
+* Hosted on Railway
+* Environment variable management
+* Production-ready Express deployment
 
-### 5. Role-Based Access Control
-```js
-router.post('/', authorize('teacher'), createClass)
-// Teacher token → allowed
-// Student token → 403 Forbidden
-```
+### Database
+
+* Hosted on Neon PostgreSQL
+* Secure cloud-hosted relational database
 
 ---
 
-## Interview Questions This Project Covers
+## Challenges Faced During Deployment
 
-- What is the event loop in Node.js?
-- How does JWT authentication work?
-- What is connection pooling and why is it important?
-- What are database transactions? What is ACID?
-- How do you handle file uploads in Express?
-- What is middleware and how does the Express middleware chain work?
-- How do you implement role-based access control?
-- How do you prevent token theft? (HttpOnly cookies vs localStorage)
-- How would you scale this to 100,000 students?
+### Production Database Migration
+
+Migrated from local PostgreSQL to Neon PostgreSQL and updated database configuration for cloud deployment.
+
+### Railway Deployment Issues
+
+Resolved build configuration issues and deployment failures caused by project structure and environment setup.
+
+### Environment Variable Configuration
+
+Diagnosed and fixed production environment variable mismatches between frontend and backend services.
+
+### CORS Configuration
+
+Resolved cross-origin communication issues between Vercel-hosted frontend and Railway-hosted backend.
+
+### Git Remote Misconfiguration
+
+Identified incorrect Git remote settings that caused deployments to track the wrong repository and restored the CI/CD workflow.
+
+### End-to-End Cloud Deployment
+
+Successfully integrated:
+
+* Vercel (Frontend)
+* Railway (Backend)
+* Neon (Database)
+
+into a complete production deployment pipeline.
+
+---
+
+## Key Software Engineering Concepts Demonstrated
+
+* REST API Development
+* JWT Authentication
+* Role-Based Access Control (RBAC)
+* PostgreSQL Database Design
+* Connection Pooling
+* Middleware Architecture
+* File Upload Handling
+* Cloud Deployment
+* CI/CD Pipelines
+* Error Handling
+* AI API Integration
+* Full-Stack Development
+
+---
+
+## Future Improvements
+
+* Real-time notifications
+* Live classroom chat
+* Video lecture integration
+* Advanced analytics dashboard
+* Assignment submission portal
+* AI-powered study recommendations
+* Multi-school support
+
+---
+
+## Author
+
+**K Sai Sri Harsha, KM Skanda**
+
+Electronics and Communication Engineering
+BMS College of Engineering
+
+GitHub: https://github.com/Harsha2oo5
