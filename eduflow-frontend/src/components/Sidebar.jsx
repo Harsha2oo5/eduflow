@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -20,6 +21,18 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
   const navItems = user?.role === 'teacher' ? teacherNav : studentNav;
 
@@ -44,8 +57,21 @@ export default function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 10, padding: '0 4px' }}>
-          {user?.name}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, padding: '0 4px' }}>
+          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '70%' }}>
+            {user?.name}
+          </div>
+          <button 
+            onClick={toggleTheme} 
+            style={{ 
+              background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', 
+              borderRadius: '50%', width: 28, height: 28, display: 'flex', 
+              alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 13 
+            }}
+            title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
         </div>
         <button className="nav-item" onClick={logout} style={{ color: '#f87171' }}>
           <span className="icon">→</span> Sign out
