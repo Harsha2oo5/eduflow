@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const { authenticate, authorize } = require('../middleware/auth');
-const { uploadMaterial, generateQuiz, getClassMaterials, getMaterialById } = require('../controllers/materialsController');
+const { uploadMaterial, generateSummary, generateQuiz, getClassMaterials, getMaterialById } = require('../controllers/materialsController');
 
 // Multer config — where to store uploaded files and what to name them
 const storage = multer.diskStorage({
@@ -37,6 +37,7 @@ router.use(authenticate);
 router.get('/class/:classId', getClassMaterials);
 router.get('/:id', getMaterialById);
 router.post('/upload', authorize('teacher'), upload.single('pdf'), uploadMaterial);
+router.post('/:id/generate-summary', generateSummary);
 router.post('/:id/generate-quiz', generateQuiz);
 
 module.exports = router;
